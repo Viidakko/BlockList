@@ -35,7 +35,37 @@ describe('GET blogs', () => {
     })
 })
 
+describe('POST blog' , () => {
+
+    const newBlog = {
+        title: 'Test blog',
+        author: 'Tester',
+        url: 'https://test.com',
+        likes: 6
+    }
+
+    test('request goes through', async () => {
+        await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
+    })
+
+    test('adds one to the database', async () => {
+        await api.post('/api/blogs').send(newBlog)
+
+        const response = await api.get('/api/blogs')
+        assert.strictEqual(response.body.length, helper.initialBlogs.length + 1)
+    })
+
+    test('can be found from db after the request', async () => {
+        await api.post('/api/blogs').send(newBlog)
+
+        const response = await api.get('/api/blogs')
+        const blogs = response.body.map(r => r.title)
+        assert(blogs.includes('Test blog'))
+    })
+})
+
 describe('id', () => {
+
     test('is named "id" and not "_id"', async () => {
         const response = await api.get('/api/blogs')
 
