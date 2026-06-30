@@ -62,6 +62,33 @@ describe('POST blog' , () => {
         const blogs = response.body.map(r => r.title)
         assert(blogs.includes('Test blog'))
     })
+
+    test('likes default to zero', async () => {
+        const newBlog = {
+            title: 'Test blog',
+            author: 'Tester',
+            url: 'https://test.com',
+        }
+        const response = await api.post('/api/blogs').send(newBlog)
+
+        assert.strictEqual(response.body.likes, 0)
+    })
+
+    test('without title fails', async () => {
+        const newBlog = {
+            author: 'Tester',
+            url: 'https://test.com'
+        }
+        await api.post('/api/blogs').send(newBlog).expect(400)
+    })
+
+    test('without url fails', async () => {
+        const newBlog = {
+            title: 'Test blog',
+            author: 'Tester',
+        }
+        await api.post('/api/blogs').send(newBlog).expect(400)
+    })
 })
 
 describe('id', () => {
