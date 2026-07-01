@@ -5,5 +5,6 @@ Content-Type: application/json
     "title": "Test3",
     "author": "John Doe",
     "url": "https://example.com",
-    "likes": 7
+    "likes": 7,
+    "user": "6a44fb4330e3c8c779e465ce"
 }
