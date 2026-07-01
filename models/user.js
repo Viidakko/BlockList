@@ -1,9 +1,18 @@
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
-    username: String,
-    name: String,
-    passwordHash: String,
+    username: {
+        type: String,
+        minLength: 3,
+        required: true,
+        unique: true
+    },
+    name: {
+        type: String,
+    },
+    passwordHash: {
+        type: String,
+    },
 })
 
 userSchema.set('toJSON', {
