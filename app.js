@@ -19,6 +19,7 @@ mongoose.connect(config.MONGODB_URI, { family: 4 }).then(() => {
 
 app.use(express.static('dist'))
 app.use(express.json())
+app.use(middleware.tokenExtractor)
 app.use(middleware.requestLogger)
 
 app.use('/api/blogs', blogsRouter)
