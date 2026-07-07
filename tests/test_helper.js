@@ -1,5 +1,17 @@
+const bcrypt = require('bcrypt')
 const Blog = require('../models/blog')
 const User = require('../models/user')
+
+const initialUser = {
+    username: 'admin',
+    name: 'Admin',
+    password: 'admin'
+}
+
+const initialUserPasswordHash = async () => {
+    const saltRounds = 10
+    return bcrypt.hash(initialUser.password, saltRounds)
+}
 
 const initialBlogs = [
     {
@@ -63,5 +75,9 @@ const usersInDb = async () => {
 }
 
 module.exports = {
-    initialBlogs, usersInDb, blogsInDb
+    initialBlogs,
+    initialUser,
+    initialUserPasswordHash,
+    usersInDb,
+    blogsInDb
 }
